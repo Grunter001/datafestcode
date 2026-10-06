@@ -30,4 +30,36 @@ Ensamble paralelo basado en la construcción de múltiples árboles de decisión
 *   **Columnas excluidas:** `id_cliente` y `objetivo` (iterando la exclusión/inclusión de `mes`).
 *   **Conjunto de Entrenamiento:** 80% de muestra aleatoria estratificada (Enero-Nov 2026).
 *   **Configuración:** `n_estimators=100`, `random_state=42`.
-*   **Gini Obtenido:**
+*   **Gini Obtenido:** 0.2112 (Sin mes) / 0.2981 (Con mes).
+
+### Modelo 2: LightGBM (LGBMClassifier)
+Algoritmo de *Gradient Boosting* optimizado para ejecución rápida sobre datos tabulares.
+*   **Preprocesamiento:** Transformación de variables textuales mediante `LabelEncoder`.
+*   **Columnas excluidas:** `id_cliente` y `objetivo` (iterando la exclusión/inclusión de `mes`).
+*   **Conjunto de Entrenamiento:** 80% de muestra aleatoria estratificada (Enero-Nov 2026).
+*   **Configuración:** `n_estimators=100`, `random_state=42`.
+*   **Gini Obtenido:** 0.2390 (Sin mes) / 0.2411 (Con mes).
+
+### Modelo 3: Regresión Logística
+Modelo paramétrico lineal utilizado como línea base algorítmica.
+*   **Preprocesamiento:** Estandarización de escalas numéricas con `StandardScaler` y binarización de categorías de texto con `One-Hot Encoding` (`pd.get_dummies`).
+*   **Columnas excluidas:** `id_cliente` y `objetivo` (iterando la exclusión/inclusión de `mes`).
+*   **Conjunto de Entrenamiento:** 80% de muestra aleatoria estratificada (Enero-Nov 2026).
+*   **Configuración:** `max_iter=1000`, `random_state=42`.
+*   **Gini Obtenido:** 0.2287 (Sin mes) / 0.2302 (Con mes).
+
+### Modelo 4: CatBoost Classifier (Inicial)
+Ensamble secuencial diseñado para el manejo nativo de variables categóricas.
+*   **Preprocesamiento:** Lectura nativa de columnas categóricas como *strings*, sin necesidad de codificadores externos.
+*   **Columnas excluidas:** `id_cliente` y `objetivo` (iterando la exclusión/inclusión de `mes`).
+*   **Conjunto de Entrenamiento:** 80% de muestra aleatoria estratificada (Enero-Nov 2026).
+*   **Configuración:** `iterations=100`, `random_state=42`.
+*   **Gini Obtenido:** 0.2092 (Sin mes) / 0.2194 (Con mes).
+
+### Modelo 5: CatBoost Classifier (Optimizado)
+Re-evaluación del algoritmo CatBoost incrementando el margen de aprendizaje.
+*   **Preprocesamiento:** Lectura nativa de columnas categóricas como *strings*.
+*   **Columnas excluidas:** `id_cliente` y `objetivo` (iterando la exclusión/inclusión de `mes`).
+*   **Conjunto de Entrenamiento:** 80% de muestra aleatoria estratificada (Enero-Nov 2026).
+*   **Configuración:** `iterations=1000`, `random_state=42`.
+*   **Gini Obtenido:** 0.2282 (Sin mes) / 0.2391 (Con mes).
